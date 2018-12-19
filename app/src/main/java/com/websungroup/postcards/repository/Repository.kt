@@ -1,13 +1,14 @@
 package com.websungroup.postcards.repository
 
-import android.databinding.ObservableArrayList
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.websungroup.postcards.api.PostcardService
 import com.websungroup.postcards.data.Postcard
-
+import com.websungroup.postcards.data.Resource
+import java.util.concurrent.Executor
 import javax.inject.Inject
 import javax.inject.Singleton
-import java.util.concurrent.Executor
 
 
 @Singleton
@@ -15,7 +16,7 @@ class Repository @Inject constructor(
     private val postcardService: PostcardService,
     private val executor: Executor
 ) {
-    val postcards = ObservableArrayList<Postcard>()
+    val postcards = mutableListOf<Postcard>()
 
     fun refreshData() {
         Log.d("TAG", "refreshData: ")
@@ -82,6 +83,12 @@ class Repository @Inject constructor(
             }
 
         return null
+    }
+
+    fun loadPostcards(postcardGroupId: String?): LiveData<List<Postcard>> {
+        val postcardsLiveData = MutableLiveData<List<Postcard>>()
+        postcardsLiveData.value = postcards
+        return postcardsLiveData
     }
 
     //    public Location getLocation(int locationId, ELocationType type) {

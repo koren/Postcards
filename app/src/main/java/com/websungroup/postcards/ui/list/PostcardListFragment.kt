@@ -45,7 +45,7 @@ class PostcardListFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(PostcardListViewModel::class.java)
 //        viewModel.adapter.get()!!.callback = this
-        viewModel.prepare()
+//        viewModel.prepare()
         binding.viewModel = viewModel
     }
 
